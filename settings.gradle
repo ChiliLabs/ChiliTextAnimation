@@ -1,0 +1,3 @@
+rootProject.name='ChiliTextAnimation'
+include ':sample'
+include ':chilitextanimation'
