@@ -5,13 +5,15 @@ import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import lv.chi.chilitextanimation.R
-import lv.chi.chilitextanimation.TextAnimationDirection
-import lv.chi.chilitextanimation.watchers.FadeTextWatcher
-import lv.chi.chilitextanimation.watchers.HorizontalFlipTextWatcher
-import lv.chi.chilitextanimation.watchers.HorizontalSlideTextWatcher
-import lv.chi.chilitextanimation.watchers.ShrinkTextWatcher
-import lv.chi.chilitextanimation.watchers.VerticalCutTextWatcher
-import lv.chi.chilitextanimation.watchers.VerticalSlideTextWatcher
+import lv.chi.chilitextanimation.animateCharacterChange
+import lv.chi.chilitextanimation.animation.FadeCharacterAnimation
+import lv.chi.chilitextanimation.animation.HorizontalFlipCharacterAnimation
+import lv.chi.chilitextanimation.animation.HorizontalSlideCharacterAnimation
+import lv.chi.chilitextanimation.animation.ShrinkCharacterAnimation
+import lv.chi.chilitextanimation.animation.VerticalCutCharacterAnimation
+import lv.chi.chilitextanimation.animation.VerticalSlideCharacterAnimation
+import lv.chi.chilitextanimation.configuration.TextAnimationHorizontalDirection
+import lv.chi.chilitextanimation.configuration.TextAnimationVerticalDirection
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -20,9 +22,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var timer: CountDownTimer
 
+    private var c: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        container.setOnClickListener {
+            //setText(c++.toString())
+        }
 
         timer = object : CountDownTimer(TimeUnit.HOURS.toMillis(1), TimeUnit.SECONDS.toMillis(1)) {
 
@@ -37,14 +45,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        text_holder1.addTextChangedListener(FadeTextWatcher(text_holder1, duration = 1000))
-        text_holder2.addTextChangedListener(VerticalSlideTextWatcher(text_holder2, duration = 1000))
-        text_holder3.addTextChangedListener(VerticalSlideTextWatcher(text_holder3, duration = 1000, direction = TextAnimationDirection.DOWN))
-        text_holder4.addTextChangedListener(ShrinkTextWatcher(text_holder4, duration = 1000))
-        text_holder5.addTextChangedListener(HorizontalSlideTextWatcher(text_holder5, duration = 1000))
-        text_holder6.addTextChangedListener(HorizontalSlideTextWatcher(text_holder6, duration = 1000, direction = TextAnimationDirection.LEFT))
-        text_holder7.addTextChangedListener(HorizontalFlipTextWatcher(text_holder7, duration = 1000))
-        text_holder8.addTextChangedListener(VerticalCutTextWatcher(text_holder8, duration = 1000))
+        text_holder1.animateCharacterChange(HorizontalFlipCharacterAnimation())
+        text_holder2.animateCharacterChange(VerticalCutCharacterAnimation())
+        text_holder3.animateCharacterChange(VerticalSlideCharacterAnimation())
+        text_holder4.animateCharacterChange(VerticalSlideCharacterAnimation(direction = TextAnimationVerticalDirection.DOWN))
+        text_holder5.animateCharacterChange(ShrinkCharacterAnimation())
+        text_holder6.animateCharacterChange(HorizontalSlideCharacterAnimation())
+        text_holder7.animateCharacterChange(HorizontalSlideCharacterAnimation(direction = TextAnimationHorizontalDirection.LEFT))
+        text_holder8.animateCharacterChange(FadeCharacterAnimation())
+
+        text_holder9.animateCharacterChange {
+            alpha = 0f
+            //textSizeCoef = 0f
+            charWidthCoef = 0f
+            translationXCoef = 1f
+            //translationYCoef = 1f
+            //duration = 1000L
+        }
     }
 
     private fun setText(text: String) {
@@ -56,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         text_holder6.text = text
         text_holder7.text = text
         text_holder8.text = text
+        text_holder9.text = text
     }
 
     override fun onStop() {
