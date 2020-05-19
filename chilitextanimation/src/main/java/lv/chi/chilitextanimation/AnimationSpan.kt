@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.text.style.ReplacementSpan
 
-abstract class BaseAnimationSpan(
+internal abstract class AnimationSpan(
+    private val fraction: Float,
+    private val changedIndices: Set<Int>,
     private val letterSpacing: Float,
     private val previousText: CharSequence?
 ) : ReplacementSpan() {
@@ -38,21 +40,38 @@ abstract class BaseAnimationSpan(
         if (text != null && previousText != null) {
             for (i in start until end) {
                 xOffset += spacingOffset
-                canvas.save()
-                drawSpan(canvas, text, previousText, i, xOffset, y, start, end, bottom - top, paint)
-                canvas.restore()
+                if (i in changedIndices) {
+                    canvas.save()
+                    drawCharacter(
+                        canvas,
+                        text,
+                        previousText,
+                        i,
+                        fraction,
+                        xOffset,
+                        y.toFloat(),
+                        start,
+                        end,
+                        bottom - top,
+                        paint
+                    )
+                    canvas.restore()
+                } else {
+                    canvas.drawText(text, i, i + 1, xOffset, y.toFloat(), paint)
+                }
                 xOffset += spacingOffset + paint.measureText(text, i, i + 1)
             }
         }
     }
 
-    abstract fun drawSpan(
+    protected abstract fun drawCharacter(
         canvas: Canvas,
         text: CharSequence,
         previousText: CharSequence,
         index: Int,
-        xOffset: Float,
-        y: Int,
+        fraction: Float,
+        x: Float,
+        y: Float,
         start: Int,
         end: Int,
         height: Int,

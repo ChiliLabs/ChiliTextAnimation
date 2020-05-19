@@ -2,10 +2,15 @@ package lv.chi.chilitextanimation
 
 import android.animation.ValueAnimator
 import android.text.Editable
+import android.text.Spannable
+import android.text.SpannableString
 import android.text.TextWatcher
 import android.widget.TextView
 
-abstract class BaseAnimationTextWatcher(protected val targetView: TextView) : TextWatcher {
+internal abstract class BaseTextWatcher(
+    private val targetView: TextView,
+    private val duration: Long
+) : TextWatcher {
 
     private var startIndex: Int = 0
     private var endIndex: Int = 0
@@ -31,14 +36,34 @@ abstract class BaseAnimationTextWatcher(protected val targetView: TextView) : Te
         val changed = findChangedIndices(oldText, newText)
         animator?.cancel()
         animator = ValueAnimator()
-        animator?.duration = getDuration()
+        animator?.duration = duration
         animator?.setObjectValues(oldText, newText)
         animator?.setEvaluator { fraction, _, _ ->
-            evaluate(fraction, oldText, newText, startIndex, endIndex, changed)
+            SpannableString(newText)
+                .apply {
+                    setSpan(
+                        getAnimationSpan(
+                            fraction,
+                            changed,
+                            targetView.letterSpacing,
+                            oldText
+                        ),
+                        startIndex,
+                        endIndex,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
         }
         animator?.addUpdateListener(animationUpdateListener)
         animator?.start()
     }
+
+    protected abstract fun getAnimationSpan(
+        fraction: Float,
+        changed: Set<Int>,
+        letterSpacing: Float,
+        oldText: CharSequence
+    ): AnimationSpan
 
     private fun findChangedIndices(oldText: CharSequence, newText: CharSequence): Set<Int> {
         return if (oldText.length >= newText.length) {
@@ -61,15 +86,4 @@ abstract class BaseAnimationTextWatcher(protected val targetView: TextView) : Te
         targetView.text = value
         targetView.addTextChangedListener(this)
     }
-
-    abstract fun getDuration(): Long
-
-    abstract fun evaluate(
-        fraction: Float,
-        oldText: CharSequence,
-        newText: CharSequence,
-        startIndex: Int,
-        endIndex: Int,
-        changedIndices: Set<Int>
-    ): CharSequence
 }
