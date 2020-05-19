@@ -45,14 +45,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        text_holder1.animateCharacterChange(HorizontalFlipCharacterAnimation())
-        text_holder2.animateCharacterChange(VerticalCutCharacterAnimation())
-        text_holder3.animateCharacterChange(VerticalSlideCharacterAnimation())
-        text_holder4.animateCharacterChange(VerticalSlideCharacterAnimation(direction = TextAnimationVerticalDirection.DOWN))
-        text_holder5.animateCharacterChange(ShrinkCharacterAnimation())
-        text_holder6.animateCharacterChange(HorizontalSlideCharacterAnimation())
-        text_holder7.animateCharacterChange(HorizontalSlideCharacterAnimation(direction = TextAnimationHorizontalDirection.LEFT))
-        text_holder8.animateCharacterChange(FadeCharacterAnimation())
+        text_holder1.animateCharacterChange(FadeCharacterAnimation())
+        text_holder2.animateCharacterChange(VerticalSlideCharacterAnimation())
+        text_holder3.animateCharacterChange(VerticalSlideCharacterAnimation(direction = TextAnimationVerticalDirection.DOWN))
+        text_holder4.animateCharacterChange(ShrinkCharacterAnimation())
+        text_holder5.animateCharacterChange(HorizontalSlideCharacterAnimation())
+        text_holder6.animateCharacterChange(HorizontalSlideCharacterAnimation(direction = TextAnimationHorizontalDirection.LEFT))
+        text_holder7.animateCharacterChange(HorizontalFlipCharacterAnimation())
+        text_holder8.animateCharacterChange(VerticalCutCharacterAnimation())
 
         text_holder9.animateCharacterChange {
             alpha = 0f
