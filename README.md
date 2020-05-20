@@ -5,11 +5,11 @@ Made with ❤️ by [Chili Labs](https://chililabs.io).
 Easy customizable animated text change library.
 
 * Implemented as extension methods for TextView so it can be easily integrated into existing projects
-* Bundles 6 pre-defined [animations] (https://github.com/ChiliLabs/ChiliTextAnimation/tree/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/animation)
-* Provides easy way to use complex animations simply by [configuring properties] (https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimationConfig.kt)
-* Provides possibility to write you own animation by implementing [CharacterChangeAnimation] (https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimation.kt)
+* Bundles 6 pre-defined [animations](https://github.com/ChiliLabs/ChiliTextAnimation/tree/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/animation)
+* Provides easy way to use complex animations simply by [configuring properties](https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimationConfig.kt)
+* Provides possibility to write you own animation by implementing [CharacterChangeAnimation](https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimation.kt)
 
-<img src="img/demo.gif" width="337" height="600">
+<img src="images/demo.gif" width="337" height="600">
 
 ## Setup
 
@@ -40,7 +40,7 @@ implementation "com.github.ChiliLabs:ChiliTextAnimation:x.y.z"
 ### Pre-defined animations
 
 Call `animateCharacterChange` with preferred animation and duration in milliseconds. 
-* `animation` - required. Pre-defined animation or your [CharacterChangeAnimation] (https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimation.kt) implementation
+* `animation` - required. Pre-defined animation or your [CharacterChangeAnimation](https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimation.kt) implementation
 * `duration` - not required. Animation duration, default value - 1 second
 
 ```kotlin
@@ -52,7 +52,7 @@ textView.animateCharacterChange(
 
 ### Custom animations
 
-Call `animateCharacterChange` overload with lambda and specify animation [configuration] (https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimationConfig.kt)
+Call `animateCharacterChange` overload with lambda and specify animation [configuration](https://github.com/ChiliLabs/ChiliTextAnimation/blob/master/chilitextanimation/src/main/java/lv/chi/chilitextanimation/configuration/CharacterChangeAnimationConfig.kt)
 
 |     Property     | Recommended value | Default value |                Description                |
 |:----------------:|:-----------------:|:---------:|:---------------------------------------------:|
